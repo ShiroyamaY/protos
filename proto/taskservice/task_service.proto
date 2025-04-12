@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package task;
+
+option go_package = "imashurade.taskservice.v1;taskservicev1";
+
+import "google/protobuf/timestamp.proto";
+
+service TaskService {
+  rpc CreateTask (CreateTaskRequest) returns (Task);
+  rpc GetTask (GetTaskRequest) returns (Task);
+  rpc UpdateTask (UpdateTaskRequest) returns (Task);
+  rpc DeleteTask (DeleteTaskRequest) returns (DeleteTaskResponse);
+}
+
+message CreateTaskRequest {
+  string title = 1;
+  string description = 2;
+}
+
+message Task {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  bool completed = 4;
+  google.protobuf.Timestamp due_date = 5;
+}
+
+message GetTaskRequest {
+  string id = 1;
+}
+
+message UpdateTaskRequest {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  bool completed = 4;
+  google.protobuf.Timestamp due_date = 5;
+}
+
+message DeleteTaskRequest {
+  string id = 1;
+}
+
+message DeleteTaskResponse {
+  string id = 1;
+}
+
+message ListTasksRequest {
+  int32 page = 1;
+  int32 pageSize = 2;
+}
+
+message ListTasksResponse {
+  repeated Task tasks = 1;
+  int32 taskCount = 2;
+}
